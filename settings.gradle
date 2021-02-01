@@ -1,0 +1,3 @@
+include ':FileUtilsPlus'
+include ':app'
+rootProject.name = "Codex Patcher V3"
