@@ -39,4 +39,4 @@ allprojects {
 - **oneTimeDialog(Activity activity ,OneTimeDialogInterface dialogInterface)** -- for showing alertdialog for only one time.
 
 
-> Thanks for using my library.
+ *[Join our telegram](https://t.me/TeamDestroyerss)*
