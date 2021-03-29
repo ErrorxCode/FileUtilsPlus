@@ -248,10 +248,12 @@ protected static OneTimeDialogInterface DialogInterface;
 
     public static void oneTimeEvent(Activity activity,OneTimeEventInterface eventInterface){
         EventInterface = eventInterface;
-        SharedPreferences.Editor editor = activity.getSharedPreferences("ota", Context.MODE_PRIVATE).edit();
-        if (!activity.getSharedPreferences("ota",Context.MODE_PRIVATE).getBoolean("isEventDone",false)){
-            editor.putBoolean("isEventDone",true).apply();
-            eventInterface.OneTimeEvent();
+        String randomName = "Pref_" + (System.currentTimeMillis() - 1617057983778L);
+        SharedPreferences.Editor editor = activity.getSharedPreferences(randomName, Context.MODE_PRIVATE).edit();
+        boolean doAgain = activity.getSharedPreferences(randomName,Context.MODE_PRIVATE).getBoolean("isEventDone",false);
+        if (!doAgain){
+            boolean bool = eventInterface.OneTimeEvent();
+            editor.putBoolean("isEventDone",bool).apply();
         }
     }
 
@@ -260,11 +262,12 @@ protected static OneTimeDialogInterface DialogInterface;
 
     public static void oneTimeDialog(Activity activity ,OneTimeDialogInterface dialogInterface){
         DialogInterface = dialogInterface;
-        SharedPreferences.Editor editor = activity.getSharedPreferences("ota", Context.MODE_PRIVATE).edit();
-        boolean showAgain = activity.getSharedPreferences("ota",Context.MODE_PRIVATE).getBoolean("isDialogShown",false);
+        String randomName = "Pref_" + (System.currentTimeMillis() - 1617037983778L);
+        SharedPreferences.Editor editor = activity.getSharedPreferences(randomName, Context.MODE_PRIVATE).edit();
+        boolean showAgain = activity.getSharedPreferences(randomName,Context.MODE_PRIVATE).getBoolean("isDialogShown",false);
         if (!showAgain){
-            editor.putBoolean("isDialogShown",true).apply();
-            dialogInterface.OneTimeDialog(new AlertDialog.Builder(activity));
+            boolean bool = dialogInterface.OneTimeDialog(new AlertDialog.Builder(activity));
+            editor.putBoolean("isDialogShown",bool).apply();
         }
     }
 
@@ -272,11 +275,11 @@ protected static OneTimeDialogInterface DialogInterface;
 
 
     public interface OneTimeEventInterface {
-        void OneTimeEvent();
+        boolean OneTimeEvent();
     }
 
     public interface OneTimeDialogInterface {
-        void OneTimeDialog(AlertDialog.Builder builder);
+        boolean OneTimeDialog(AlertDialog.Builder builder);
     }
 
 }
