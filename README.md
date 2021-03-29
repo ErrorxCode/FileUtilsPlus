@@ -17,7 +17,7 @@ allprojects {
   In your app level :-
   ```
   dependencies {
-	        implementation 'com.github.ErrorxCode:FileUtilsPlus:1.0'
+	        implementation 'com.github.ErrorxCode:FileUtilsPlus:1.5'
 	}
   ```
 
