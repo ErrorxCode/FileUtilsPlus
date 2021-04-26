@@ -25,8 +25,9 @@ import java.io.PrintWriter;
 
 public class FileUtilsPlus {
 
-protected static OneTimeEventInterface EventInterface;
-protected static OneTimeDialogInterface DialogInterface;
+    protected static OneTimeEventInterface EventInterface;
+    protected static OneTimeDialogInterface DialogInterface;
+    public static String SAME_PATH;
 
 
 
@@ -74,7 +75,7 @@ protected static OneTimeDialogInterface DialogInterface;
                 in.close();
                 out.flush();
             } catch (IOException e) {
-               e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
@@ -174,7 +175,7 @@ protected static OneTimeDialogInterface DialogInterface;
     }
 
 
-    public static boolean delete(Activity activity,String filepath) {
+    public static boolean delete(String filepath) {
         File file = new File(filepath);
         if (file.isDirectory()) {
             try {
@@ -187,7 +188,6 @@ protected static OneTimeDialogInterface DialogInterface;
         } else if (file.isFile()) {
             return file.delete();
         } else {
-            Toast.makeText(activity, "Path is not a file or a directory", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -196,6 +196,7 @@ protected static OneTimeDialogInterface DialogInterface;
 // UnZip Library
 
     public static boolean UnZip(String source, String path) {
+        SAME_PATH = path.substring(0,path.lastIndexOf("/"));
         ZipFile zipFile = new ZipFile(source);
         try {
             zipFile.extractAll(path);
@@ -232,17 +233,19 @@ protected static OneTimeDialogInterface DialogInterface;
         return data;
     }
 
-    public static void eraseFile(String filepath,String what){
+    public static boolean eraseFile(String filepath,String what){
         String data = readFile(filepath);
         data = data.replace(what,"");
         File file = new File(filepath);
         file.delete();
         try {
             file.createNewFile();
+            writeFile(filepath,data,true);
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        writeFile(filepath,data,true);
     }
 
 
@@ -281,7 +284,6 @@ protected static OneTimeDialogInterface DialogInterface;
     public interface OneTimeDialogInterface {
         boolean OneTimeDialog(AlertDialog.Builder builder);
     }
-
 }
 
 
